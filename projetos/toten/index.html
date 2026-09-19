@@ -1,0 +1,1254 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Totem do Banheiro</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* =========================
+           CABEÇALHO
+        ========================= */
+
+        header {
+            background: #17365d;
+            color: white;
+            padding: 18px 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        header span {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* =========================
+           NAVEGAÇÃO
+        ========================= */
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #e5e7eb;
+            color: #374151;
+            font-weight: bold;
+        }
+
+        .nav button.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* =========================
+           TOTEM
+        ========================= */
+
+        .totem {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+
+            box-shadow: 0 5px 25px rgba(0,0,0,0.10);
+        }
+
+        .totem-icon {
+            font-size: 70px;
+            margin-bottom: 10px;
+        }
+
+        .totem h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #17365d;
+        }
+
+        .totem p {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .senha-display {
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .senha-display small {
+            display: block;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .senha-display strong {
+            font-size: 64px;
+            color: #17365d;
+        }
+
+        .btn-senha {
+            width: 100%;
+            padding: 22px;
+            border-radius: 15px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .btn-senha:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+
+        .btn-senha:active {
+            transform: scale(0.98);
+        }
+
+        .fila-info {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #475569;
+        }
+
+        .fila-info strong {
+            color: #2563eb;
+        }
+
+        /* =========================
+           SENHA GERADA
+        ========================= */
+
+        .nova-senha {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .nova-senha.mostrar {
+            display: block;
+        }
+
+        .nova-senha strong {
+            font-size: 42px;
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* =========================
+           PROFESSOR
+        ========================= */
+
+        .painel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            color: #17365d;
+        }
+
+        .senha-atual {
+            text-align: center;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 12px;
+        }
+
+        .senha-atual span {
+            display: block;
+            color: #64748b;
+        }
+
+        .senha-atual strong {
+            display: block;
+            font-size: 70px;
+            color: #2563eb;
+            margin: 10px 0;
+        }
+
+        .tempo {
+            color: #64748b;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .botoes button {
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* =========================
+           FILA
+        ========================= */
+
+        .fila {
+            list-style: none;
+        }
+
+        .fila li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 14px;
+            margin-bottom: 8px;
+
+            background: #f8fafc;
+            border-radius: 8px;
+
+            border-left: 4px solid #2563eb;
+        }
+
+        .fila .senha {
+            font-size: 22px;
+            font-weight: bold;
+            color: #17365d;
+        }
+
+        .fila .horario {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .fila-vazia {
+            text-align: center;
+            color: #94a3b8;
+            padding: 30px;
+        }
+
+        /* =========================
+           CONFIGURAÇÕES
+        ========================= */
+
+        .acoes {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .acoes button {
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+            }
+
+            .totem {
+                padding: 25px;
+            }
+
+            .totem h2 {
+                font-size: 25px;
+            }
+
+            .btn-senha {
+                font-size: 20px;
+            }
+
+            .painel {
+                grid-template-columns: 1fr;
+            }
+
+            .senha-atual strong {
+                font-size: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div>
+        <h1>🚻 Totem do Banheiro</h1>
+        <span>Controle de fila da sala</span>
+    </div>
+
+    <div id="relogio">
+        00:00:00
+    </div>
+
+</header>
+
+
+<!-- =========================
+     NAVEGAÇÃO
+========================= -->
+
+<nav class="nav">
+
+    <button
+        id="btnTotem"
+        class="active"
+        onclick="mostrarTela('totem')">
+        🎟️ Totem
+    </button>
+
+    <button
+        id="btnProfessor"
+        onclick="mostrarTela('professor')">
+        👩‍🏫 Professor
+    </button>
+
+</nav>
+
+
+<main class="container">
+
+
+    <!-- =========================
+         TELA DO TOTEM
+    ========================= -->
+
+    <section
+        id="totem"
+        class="screen active">
+
+        <div class="totem">
+
+            <div class="totem-icon">
+                🚻
+            </div>
+
+            <h2>
+                Fila do Banheiro
+            </h2>
+
+            <p>
+                Pegue uma senha para entrar na fila.
+            </p>
+
+
+            <div class="senha-display">
+
+                <small>
+                    Última senha retirada
+                </small>
+
+                <strong id="ultimaSenha">
+                    000
+                </strong>
+
+            </div>
+
+
+            <button
+                class="btn-senha"
+                onclick="pegarSenha()">
+
+                🎟️ PEGAR MINHA SENHA
+
+            </button>
+
+
+            <div
+                id="novaSenha"
+                class="nova-senha">
+
+                Sua senha é:
+
+                <strong id="senhaGerada">
+                    000
+                </strong>
+
+                Aguarde sua vez.
+
+            </div>
+
+
+            <div class="fila-info">
+
+                Pessoas aguardando:
+
+                <strong id="quantidadeFila">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         TELA DO PROFESSOR
+    ========================= -->
+
+    <section
+        id="professor"
+        class="screen">
+
+        <div class="painel">
+
+
+            <!-- CONTROLE -->
+
+            <div class="card">
+
+                <h3>
+                    🎯 Controle da fila
+                </h3>
+
+
+                <div class="senha-atual">
+
+                    <span>
+                        Senha atual
+                    </span>
+
+                    <strong id="senhaAtual">
+                        ---
+                    </strong>
+
+                    <div class="tempo">
+
+                        Tempo:
+                        <span id="tempoSenha">
+                            --
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="botoes">
+
+                    <button
+                        class="btn-primary"
+                        onclick="chamarProxima()">
+
+                        ▶️ Chamar próxima
+
+                    </button>
+
+
+                    <button
+                        class="btn-secondary"
+                        onclick="reChamar()">
+
+                        🔊 Rechamar
+
+                    </button>
+
+
+                    <button
+                        class="btn-success"
+                        onclick="finalizarSenha()">
+
+                        ✅ Finalizar
+
+                    </button>
+
+
+                    <button
+                        class="btn-danger"
+                        onclick="cancelarSenha()">
+
+                        ❌ Cancelar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FILA -->
+
+            <div class="card">
+
+                <h3>
+                    👥 Pessoas aguardando
+                </h3>
+
+                <ul
+                    id="listaFila"
+                    class="fila">
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- AÇÕES -->
+
+        <div class="card" style="margin-top:20px;">
+
+            <h3>
+                ⚙️ Administração
+            </h3>
+
+            <p>
+                Use esta opção somente para iniciar uma nova fila.
+            </p>
+
+
+            <div class="acoes">
+
+                <button
+                    class="btn-danger"
+                    onclick="reiniciarFila()">
+
+                    🔄 Reiniciar fila
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    Sistema local de controle de fila • Sala de aula
+
+</footer>
+
+
+
+<script>
+
+    /* ==========================================
+       DADOS
+    ========================================== */
+
+    let dados = JSON.parse(
+        localStorage.getItem("filaBanheiro")
+    ) || {
+
+        proximaSenha: 1,
+
+        fila: [],
+
+        senhaAtual: null
+
+    };
+
+
+    /* ==========================================
+       SALVAR
+    ========================================== */
+
+    function salvar() {
+
+        localStorage.setItem(
+            "filaBanheiro",
+            JSON.stringify(dados)
+        );
+
+    }
+
+
+    /* ==========================================
+       FORMATAR SENHA
+    ========================================== */
+
+    function formatarSenha(numero) {
+
+        return String(numero).padStart(3, "0");
+
+    }
+
+
+    /* ==========================================
+       HORÁRIO
+    ========================================== */
+
+    function horarioAtual() {
+
+        return new Date().toLocaleTimeString(
+            "pt-BR",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    /* ==========================================
+       PEGAR SENHA
+    ========================================== */
+
+    function pegarSenha() {
+
+        const numero = dados.proximaSenha;
+
+        const senha = {
+
+            numero: numero,
+
+            retirada: Date.now(),
+
+            horario: horarioAtual()
+
+        };
+
+
+        dados.fila.push(senha);
+
+        dados.proximaSenha++;
+
+
+        salvar();
+
+        atualizarTela();
+
+
+        // Mostra a senha para o aluno
+
+        document.getElementById(
+            "senhaGerada"
+        ).textContent = formatarSenha(numero);
+
+
+        document.getElementById(
+            "novaSenha"
+        ).classList.add("mostrar");
+
+
+        // Esconde depois de alguns segundos
+
+        setTimeout(() => {
+
+            document.getElementById(
+                "novaSenha"
+            ).classList.remove("mostrar");
+
+        }, 5000);
+
+    }
+
+
+
+    /* ==========================================
+       CHAMAR PRÓXIMA
+    ========================================== */
+
+    function chamarProxima() {
+
+        if (dados.fila.length === 0) {
+
+            alert(
+                "Não existem pessoas aguardando."
+            );
+
+            return;
+
+        }
+
+
+        // Se já existe alguém sendo atendido
+
+        if (dados.senhaAtual !== null) {
+
+            const continuar =
+                confirm(
+                    "Já existe uma senha sendo atendida.\n\n" +
+                    "Deseja chamar a próxima mesmo assim?"
+                );
+
+            if (!continuar) {
+                return;
+            }
+
+        }
+
+
+        dados.senhaAtual =
+            dados.fila.shift();
+
+
+        dados.senhaAtual.chamada =
+            Date.now();
+
+
+        salvar();
+
+        atualizarTela();
+
+        falarSenha(
+            dados.senhaAtual.numero
+        );
+
+    }
+
+
+
+    /* ==========================================
+       RECHAMAR
+    ========================================== */
+
+    function reChamar() {
+
+        if (!dados.senhaAtual) {
+
+            alert(
+                "Nenhuma senha está sendo atendida."
+            );
+
+            return;
+
+        }
+
+
+        falarSenha(
+            dados.senhaAtual.numero
+        );
+
+    }
+
+
+
+    /* ==========================================
+       FINALIZAR
+    ========================================== */
+
+    function finalizarSenha() {
+
+        if (!dados.senhaAtual) {
+
+            alert(
+                "Nenhuma senha está sendo atendida."
+            );
+
+            return;
+
+        }
+
+
+        dados.senhaAtual = null;
+
+        salvar();
+
+        atualizarTela();
+
+    }
+
+
+
+    /* ==========================================
+       CANCELAR
+    ========================================== */
+
+    function cancelarSenha() {
+
+        if (!dados.senhaAtual) {
+
+            alert(
+                "Nenhuma senha está sendo atendida."
+            );
+
+            return;
+
+        }
+
+
+        const senha =
+            formatarSenha(
+                dados.senhaAtual.numero
+            );
+
+
+        if (
+            !confirm(
+                "Cancelar a senha " +
+                senha +
+                "?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        dados.senhaAtual = null;
+
+        salvar();
+
+        atualizarTela();
+
+    }
+
+
+
+    /* ==========================================
+       REINICIAR
+    ========================================== */
+
+    function reiniciarFila() {
+
+        const confirmar =
+            confirm(
+                "ATENÇÃO!\n\n" +
+                "Isso apagará toda a fila atual.\n\n" +
+                "Deseja realmente reiniciar?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        dados = {
+
+            proximaSenha: 1,
+
+            fila: [],
+
+            senhaAtual: null
+
+        };
+
+
+        salvar();
+
+        atualizarTela();
+
+    }
+
+
+
+    /* ==========================================
+       FALAR SENHA
+    ========================================== */
+
+    function falarSenha(numero) {
+
+        if (!("speechSynthesis" in window)) {
+            return;
+        }
+
+
+        const senha =
+            formatarSenha(numero);
+
+
+        const fala =
+            new SpeechSynthesisUtterance(
+                "Senha " +
+                numero
+            );
+
+
+        fala.lang = "pt-BR";
+
+        fala.rate = 0.9;
+
+        fala.pitch = 1;
+
+
+        speechSynthesis.cancel();
+
+        speechSynthesis.speak(fala);
+
+    }
+
+
+
+    /* ==========================================
+       ATUALIZAR TELA
+    ========================================== */
+
+    function atualizarTela() {
+
+        /* Última senha */
+
+        const ultima =
+            dados.proximaSenha - 1;
+
+
+        document.getElementById(
+            "ultimaSenha"
+        ).textContent =
+            formatarSenha(
+                Math.max(0, ultima)
+            );
+
+
+        /* Quantidade */
+
+        document.getElementById(
+            "quantidadeFila"
+        ).textContent =
+            dados.fila.length;
+
+
+        /* Senha atual */
+
+        const atual =
+            document.getElementById(
+                "senhaAtual"
+            );
+
+
+        if (dados.senhaAtual) {
+
+            atual.textContent =
+                formatarSenha(
+                    dados.senhaAtual.numero
+                );
+
+        } else {
+
+            atual.textContent = "---";
+
+        }
+
+
+        /* Lista */
+
+        const lista =
+            document.getElementById(
+                "listaFila"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (dados.fila.length === 0) {
+
+            lista.innerHTML =
+                '<li class="fila-vazia">' +
+                "Nenhuma pessoa aguardando." +
+                "</li>";
+
+        } else {
+
+
+            dados.fila.forEach(
+                (item, index) => {
+
+                    const li =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    li.innerHTML = `
+
+                        <div>
+
+                            <div class="senha">
+                                ${formatarSenha(item.numero)}
+                            </div>
+
+                            <div class="horario">
+                                Retirada às ${item.horario}
+                            </div>
+
+                        </div>
+
+                        <div>
+                            ${index + 1}º
+                        </div>
+
+                    `;
+
+
+                    lista.appendChild(li);
+
+                }
+            );
+
+        }
+
+
+        atualizarTempo();
+
+    }
+
+
+
+    /* ==========================================
+       TEMPO DA SENHA
+    ========================================== */
+
+    function atualizarTempo() {
+
+        const elemento =
+            document.getElementById(
+                "tempoSenha"
+            );
+
+
+        if (!dados.senhaAtual) {
+
+            elemento.textContent = "--";
+
+            return;
+
+        }
+
+
+        const inicio =
+            dados.senhaAtual.chamada;
+
+
+        const segundos =
+            Math.floor(
+                (Date.now() - inicio) / 1000
+            );
+
+
+        const minutos =
+            Math.floor(segundos / 60);
+
+
+        const seg =
+            segundos % 60;
+
+
+        elemento.textContent =
+            String(minutos).padStart(2, "0") +
+            ":" +
+            String(seg).padStart(2, "0");
+
+    }
+
+
+
+    /* ==========================================
+       RELÓGIO
+    ========================================== */
+
+    function atualizarRelogio() {
+
+        const agora =
+            new Date();
+
+
+        document.getElementById(
+            "relogio"
+        ).textContent =
+            agora.toLocaleTimeString(
+                "pt-BR"
+            );
+
+    }
+
+
+
+    /* ==========================================
+       TROCAR TELA
+    ========================================== */
+
+    function mostrarTela(tela) {
+
+        document
+            .querySelectorAll(".screen")
+            .forEach(
+                elemento => {
+
+                    elemento.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(tela)
+            .classList.add("active");
+
+
+        document
+            .getElementById("btnTotem")
+            .classList.remove("active");
+
+
+        document
+            .getElementById("btnProfessor")
+            .classList.remove("active");
+
+
+        if (tela === "totem") {
+
+            document
+                .getElementById("btnTotem")
+                .classList.add("active");
+
+        } else {
+
+            document
+                .getElementById("btnProfessor")
+                .classList.add("active");
+
+        }
+
+    }
+
+
+
+    /* ==========================================
+       INICIALIZAÇÃO
+    ========================================== */
+
+    atualizarTela();
+
+    atualizarRelogio();
+
+
+    setInterval(
+        atualizarRelogio,
+        1000
+    );
+
+
+    setInterval(
+        atualizarTempo,
+        1000
+    );
+
+</script>
+
+</body>
+</html>
+```
