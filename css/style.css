@@ -116,3 +116,32 @@ a { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Links discretos para acesso pessoal e testes dos projetos gratuitos */
+.footer-private-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 12px;
+    color: rgba(244, 246, 250, .38);
+    font-size: .68rem;
+}
+.footer-private-links span {
+    font-size: .6rem;
+    letter-spacing: .12em;
+    opacity: .75;
+}
+.footer-private-links a {
+    color: rgba(244, 246, 250, .48);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+.footer-private-links a:hover,
+.footer-private-links a:focus-visible {
+    color: #A9C7EE;
+}
+@media (max-width: 575.98px) {
+    .footer-private-links { justify-content: flex-start; }
+}
