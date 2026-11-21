@@ -6,7 +6,7 @@ A Kernwerk Labs desenvolve soluções digitais com foco em desenvolvimento de so
 
 ## Presença digital
 
-Acesse o site: [Kernwerk Labs](https://danatiellycp.github.io/CATecnologia/)
+Acesse o site: [Kernwerk Labs](https://kernwerklabs.netlify.app/)
 
 ## Projetos e ferramentas
 
