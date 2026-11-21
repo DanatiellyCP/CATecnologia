@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 112" role="img" aria-labelledby="title">
+<title id="title">Kernwerk Labs</title>
+<rect x="4" y="4" width="104" height="104" rx="18" fill="#101B35"/>
+<path d="M31 27v58h13V63l27 22h20L56 56l34-29H71L44 52V27z" fill="#F4F6FA"/>
+<path d="M71 27h19L56 56h-18z" fill="#A9C7EE" opacity=".95"/>
+<text x="132" y="58" fill="#101B35" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="800" letter-spacing="1.5">KERNWERK</text>
+<text x="135" y="86" fill="#274B83" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="9">LABS</text>
+</svg>
